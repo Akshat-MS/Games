@@ -15,43 +15,46 @@ tic_ui.displayBoard()
 # Decalaring global variables
 turn = 1
 player = 1
+print("Welcome to Play Tic Tac Toe")
+print("Choose one options as shown below - ")
+print("1. Single Player.")
+print("2. Two player Game. ")
+print()
+
+while True:
+    try :
+        bSingleFlag = int(input("Choose playing Option "))
+    except:
+        print("Not a proper integer1! Try it again")
+        continue
+    break
+
 while True:
 
-    try :
-        num = int(input("Enter any number between 1 & 9 and fix the position : "))
-    except ValueError:
-        print("Not a proper integer! Try it again")
-        continue
-
-    print()
-
-    cords = tic_verify.validMove(num,3)
-    if (cords[0] == 1 and player == 1):
-        tic_ui.updateBoard(cords,drawXO = 'X')
-    elif (cords[0] == 1):
-        tic_ui.updateBoard(cords,drawXO = 'O')
-
-    if player == 1:
-        print("Player One Turn")
-        tic_ui.displayBoard()
+    if bSingleFlag == 1 and player == 1:
+        tic_ui.playerChance(1)
+    elif bSingleFlag == 1 and player == 2:
+        tic_ui.computerChance(1)
     else:
-        print("Player Two Turn")
-        tic_ui.displayBoard()
-        
+        tic_ui.playerChance(2)
+
+    # Win Check    
     if player == 1:
         if tic_verify.winCheck(1):
             print("Player One Won")
             break
+        else:
+            print("\nPlayer Two Chance")
+            player = 2
     else:
         if tic_verify.winCheck(2):
             print("Player Two Won")
             break
+        else:
+            print("\nPlayer One Chance")
+            player = 1
 
-    if cords[0] == 1 and player%2 == 1:
-        player = 2
-    else :
-        player = 1
-
+    # Board Full Check
     if tic_ui.isBoardFull():
         print("Game Over and Match Draw!!")
         break
